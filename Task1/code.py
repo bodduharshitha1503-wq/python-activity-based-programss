@@ -1,43 +1,60 @@
 
-print("TELECOMMUNICATION COST OPTIMIZATION")
-
 data = float(input("Enter required data (GB): "))
-calls = int(input("Enter required calls (minutes): "))
+calls = int(input("Enter required call minutes: "))
 validity = int(input("Enter required validity (days): "))
 budget = float(input("Enter your budget: "))
 
-n = int(input("Enter number of mobile plans: "))
-plans = []
-for i in range(n):
-    print("\nEnter Plan", i + 1, "details")
-    name = input("Plan name: ")
-    cost = float(input("Plan cost: "))
-    pdata = float(input("Data limit (GB): "))
-    pcalls = int(input("Call limit (minutes): "))
-    days = int(input("Validity (days): "))
-    dcharge = float(input("Extra data charge per GB: "))
-    ccharge = float(input("Extra call charge per minute: "))
+plans = [
+    {"name": "Basic", "price": 199, "data": 2,
+     "calls": 200, "days": 28, "extra_data": 20,
+     "extra_call": 1},
 
-    extra_data = max(0, data - pdata)
-    extra_calls = max(0, calls - pcalls)
+    {"name": "Smart", "price": 299, "data": 4,
+     "calls": 500, "days": 28, "extra_data": 15,
+     "extra_call": 0.5},
 
-    total = cost + extra_data * dcharge
-    total += extra_calls * ccharge
+    {"name": "Premium", "price": 399, "data": 8,
+     "calls": 1000, "days": 56, "extra_data": 10,
+     "extra_call": 0.5},
 
-    if days >= validity and total <= budget:
-        plans.append((total, name, extra_data, extra_calls))
+    {"name": "Unlimited", "price": 599, "data": 15,
+     "calls": 1500, "days": 84, "extra_data": 5,
+     "extra_call": 0.25}
+]
 
-if plans:
-    plans.sort()
-    print("\nEligible Mobile Plans:")
-    for p in plans:
-        print(p[1], "Total Cost:", p[0])
-        print("Extra Data:", p[2], "GB")
-        print("Extra Calls:", p[3], "minutes")
+eligible = []
 
-    best = plans[0]
-    print("\nMost Economical Plan:", best[1])
-    print("Minimum Total Cost: Rs.", best[0])
+print("\n--- Mobile Plan Comparison ---")
+
+for p in plans:
+    excess_data = max(0, data - p["data"])
+    excess_calls = max(0, calls - p["calls"])
+
+    extra_cost = (excess_data * p["extra_data"] +
+                  excess_calls * p["extra_call"])
+
+    total = p["price"] + extra_cost
+
+    print("\nPlan:", p["name"])
+    print("Base Price:", p["price"])
+    print("Extra Charges:", extra_cost)
+    print("Total Cost:", total)
+
+    if (p["data"] >= data and
+        p["calls"] >= calls and
+        p["days"] >= validity and
+        total <= budget):
+
+        eligible.append((total, p["name"]))
+
+if eligible:
+    best = min(eligible)
+
+    print("\n--- Best Economical Plan ---")
+    print("Plan Name:", best[1])
+    print("Total Cost: Rs.", best[0])
 else:
     print("\nNo eligible plan found!")
+
+print("\nOptimization Completed.")
 
