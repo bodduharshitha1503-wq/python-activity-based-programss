@@ -56,8 +56,7 @@ flowchart TD
     O --> P
     P --> Q[Display parking bill]
     Q --> R([Stop])
-
-
+```
 ## 4. Sample Input
 
 ```
