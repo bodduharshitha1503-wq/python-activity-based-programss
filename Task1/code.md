@@ -26,7 +26,7 @@ The program should:
 11. Stop.
 
 ## 3. Flowchart 
-```mermaid code
+```mermaid flowchart
 
 flowchart TD
     A([Start]) --> B[/Enter data usage, call minutes, validity and budget/]
@@ -47,7 +47,7 @@ flowchart TD
     M --> O[Display best economical plan]
     N --> P([Stop])
     O --> P
-
+```
 
 
 ## 4. Sample Input
@@ -93,4 +93,4 @@ Optimization Completed.
 
 
 
-Best plan in this example: Smart Plan – ₹299.
+
